@@ -1,5 +1,7 @@
 package com.pengli.shopSystem.beans;
 
+import java.math.BigDecimal;
+
 public class GoodsCategory {
 	protected String UPCCode;
 	protected String name;
@@ -12,7 +14,7 @@ public class GoodsCategory {
 	
 	public void addMore(int num){
 		this.number += num;
-		this.totlePrice += this.price * num;
+		this.totlePrice = BigDecimal.valueOf(this.totlePrice).add(BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(num))).doubleValue();
 	}
 	
 	public void applyPromotion(){

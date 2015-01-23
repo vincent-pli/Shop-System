@@ -1,11 +1,13 @@
 package com.pengli.shopSystem.beans;
 
+import java.math.BigDecimal;
+
 public class BuyTwoFreeOne implements PromotionInterface {
 
 	@Override
 	public GoodsCategory applyPromation(GoodsCategory goodsCategory) {
 		if(goodsCategory.getNumber() >= 2){
-			goodsCategory.setTotlePrice(goodsCategory.getTotlePrice() - goodsCategory.getPrice() * 1);
+			goodsCategory.setTotlePrice(BigDecimal.valueOf(goodsCategory.getTotlePrice()).subtract(BigDecimal.valueOf(goodsCategory.getPrice()).multiply(new BigDecimal("1"))).doubleValue());
 		}
 		
 		return goodsCategory;
