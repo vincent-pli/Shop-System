@@ -1,7 +1,8 @@
 package com.pengli.shopSystem.beans;
 
 public interface PromotionInterface {
-	public GoodsCategory applyPromation(GoodsCategory goodsCategory);
+	public Purchase applyPromation(Purchase onePurchase);
 	
-	public String printPromotion(GoodsCategory goodsCategory);
+	public String getPromotionInfo();
+	
 }

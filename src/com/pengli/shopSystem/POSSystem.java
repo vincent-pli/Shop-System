@@ -1,6 +1,8 @@
 package com.pengli.shopSystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.pengli.shopSystem.beans.Apple;
@@ -8,24 +10,46 @@ import com.pengli.shopSystem.beans.Badminton;
 import com.pengli.shopSystem.beans.BuyTwoFreeOne;
 import com.pengli.shopSystem.beans.CocoCola;
 import com.pengli.shopSystem.beans.GoodsCategory;
-import com.pengli.shopSystem.beans.PromotionInterface;
+import com.pengli.shopSystem.beans.PrintTextImp;
+import com.pengli.shopSystem.beans.PrinterInterface;
+import com.pengli.shopSystem.beans.Purchase;
 
 public class POSSystem {
 	static Map<String, GoodsCategory> goodsList;
 	static{
-		PromotionInterface promotion = new BuyTwoFreeOne();
+		//Set promotion policy	
 		goodsList = new HashMap<String, GoodsCategory>();
 		CocoCola coco = new CocoCola();
-		coco.setPromotion(promotion);
+		coco.setPromotion(new BuyTwoFreeOne());
 		goodsList.put(coco.getUPCCode(), coco);
 		Badminton badminton = new Badminton();
-		badminton.setPromotion(promotion);
+		badminton.setPromotion(new BuyTwoFreeOne());
 		goodsList.put(badminton.getUPCCode(), badminton);
 		Apple apple = new Apple();
 		goodsList.put(apple.getUPCCode(), apple);
 	}
 	
-	private void countGoods(String[] detailedList){
+	private PrinterInterface print;
+	
+	public void printInventory(String[] detailedList){
+		List<Purchase> purchaseList = this.parseUPCs(detailedList);
+		applyPromotion(purchaseList);
+		this.print.print(purchaseList);
+	}
+	
+	public void setPrint(PrinterInterface print) {
+		this.print = print;
+	}
+	
+	private void applyPromotion(List<Purchase> purchaseList){
+		for(Purchase purchase : purchaseList){
+			purchase.settleAccounts();
+		}
+	}
+	
+	private List<Purchase> parseUPCs(String[] detailedList){
+		Map<String, Purchase> purchaseList = new HashMap<String, Purchase>();
+		
 		for(String item : detailedList){
 			String UPCCode;
 			int number;
@@ -37,41 +61,32 @@ public class POSSystem {
 				UPCCode = item;
 				number = 1;
 			}
-			if(POSSystem.goodsList.containsKey(UPCCode)){
-				POSSystem.goodsList.get(UPCCode).addMore(number);
+			buildPurchaseList(UPCCode, number, purchaseList);
+		}	
+		return new ArrayList<Purchase>(purchaseList.values());
+	}
+	
+	private void buildPurchaseList(String UPCCode, int number, Map<String, Purchase> purchaseList){
+		if(POSSystem.goodsList.containsKey(UPCCode)){
+			GoodsCategory goods = POSSystem.goodsList.get(UPCCode);
+			if(purchaseList.containsKey(UPCCode)){
+				purchaseList.get(UPCCode).buyMore(number);
 			}
-		}		
-	}
-	
-	private void applyPromotion(){
-		for(Map.Entry<String, GoodsCategory> goods : POSSystem.goodsList.entrySet()){
-			goods.getValue().applyPromotion();
+			else{
+				Purchase purchase = new Purchase(goods);
+				purchase.buyMore(number);
+				purchaseList.put(UPCCode, purchase);
+			}
 		}
 	}
-	
-	private void printDetailedList(){
-		for(Map.Entry<String, GoodsCategory> goods : POSSystem.goodsList.entrySet()){
-			System.out.println(goods.getValue());
-		}
-		System.out.println("--------------------");
-	}
-	
-	private void printPromotionInfo(){
-		for(Map.Entry<String, GoodsCategory> goods : POSSystem.goodsList.entrySet()){
-			System.out.println(goods.getValue().printPromotionInfo());
-		}
-	}
-	
-	public void printInventory(String[] detailedList){
-		this.countGoods(detailedList);
-		this.applyPromotion();
-		this.printDetailedList();
-		this.printPromotionInfo();
-	}
-	
+
 	public static void main(String[] args) {
 		POSSystem pos = new POSSystem();
+		PrinterInterface print = new PrintTextImp();
+		pos.setPrint(print);
 		String[] input = {"ITEM000001", "ITEM000001", "ITEM000001", "ITEM000001", "ITEM000001", "ITEM000003-2", "ITEM000005", "ITEM000005", "ITEM000005"};
+		
 		pos.printInventory(input);
+		
 	}
 }

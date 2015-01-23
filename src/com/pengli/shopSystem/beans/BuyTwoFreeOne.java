@@ -3,22 +3,21 @@ package com.pengli.shopSystem.beans;
 import java.math.BigDecimal;
 
 public class BuyTwoFreeOne implements PromotionInterface {
-
+	private String promotionInfo;
+	
 	@Override
-	public GoodsCategory applyPromation(GoodsCategory goodsCategory) {
-		if(goodsCategory.getNumber() >= 2){
-			goodsCategory.setTotlePrice(BigDecimal.valueOf(goodsCategory.getTotlePrice()).subtract(BigDecimal.valueOf(goodsCategory.getPrice()).multiply(new BigDecimal("1"))).doubleValue());
+	public Purchase applyPromation(Purchase onePurchase) {
+		if(onePurchase.getNumber() >= 2){
+			onePurchase.setTotalPrice(BigDecimal.valueOf(onePurchase.getTotalPrice()).subtract(BigDecimal.valueOf(onePurchase.getGoodsCategory().getPrice()).multiply(new BigDecimal("1"))).doubleValue());
 		}
 		
-		return goodsCategory;
+		this.promotionInfo = "Give as persent: " + onePurchase.getGoodsCategory().getName() + " 1.";
+		return onePurchase;
 	}
 
 	@Override
-	public String printPromotion(GoodsCategory goodsCategory) {
-		return "Give as present: " + goodsCategory.getName() + " 1 " + goodsCategory.getUnit();
-		
+	public String getPromotionInfo() {
+		return this.promotionInfo;
 	}
-
-
 
 }
