@@ -1,6 +1,10 @@
-package com.pengli.shopSystem.beans;
+package com.pengli.shopSystem.beans.printer.imp;
 
 import java.util.List;
+
+import com.pengli.shopSystem.beans.Purchase;
+import com.pengli.shopSystem.beans.printer.PrinterInterface;
+
 
 public class PrintTextImp implements PrinterInterface {
 	private final String SEPARATOR = "-------------------------";

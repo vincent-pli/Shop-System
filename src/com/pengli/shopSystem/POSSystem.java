@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pengli.shopSystem.beans.Apple;
-import com.pengli.shopSystem.beans.Badminton;
-import com.pengli.shopSystem.beans.BuyTwoFreeOne;
-import com.pengli.shopSystem.beans.CocoCola;
-import com.pengli.shopSystem.beans.GoodsCategory;
-import com.pengli.shopSystem.beans.PrintTextImp;
-import com.pengli.shopSystem.beans.PrinterInterface;
 import com.pengli.shopSystem.beans.Purchase;
+import com.pengli.shopSystem.beans.goods.Apple;
+import com.pengli.shopSystem.beans.goods.Badminton;
+import com.pengli.shopSystem.beans.goods.CocoCola;
+import com.pengli.shopSystem.beans.goods.GoodsCategory;
+import com.pengli.shopSystem.beans.printer.PrinterInterface;
+import com.pengli.shopSystem.beans.printer.imp.PrintTextImp;
+import com.pengli.shopSystem.beans.promotion.imp.BuyTwoFreeOne;
 
 public class POSSystem {
 	static Map<String, GoodsCategory> goodsList;

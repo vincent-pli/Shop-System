@@ -1,4 +1,6 @@
-package com.pengli.shopSystem.beans;
+package com.pengli.shopSystem.beans.goods;
+
+import com.pengli.shopSystem.beans.promotion.PromotionInterface;
 
 public class GoodsCategory {
 	protected String UPCCode;

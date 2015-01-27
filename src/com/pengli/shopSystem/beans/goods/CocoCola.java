@@ -1,4 +1,4 @@
-package com.pengli.shopSystem.beans;
+package com.pengli.shopSystem.beans.goods;
 
 public class CocoCola extends GoodsCategory {
 	

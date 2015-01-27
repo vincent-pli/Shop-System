@@ -2,6 +2,8 @@ package com.pengli.shopSystem.beans;
 
 import java.math.BigDecimal;
 
+import com.pengli.shopSystem.beans.goods.GoodsCategory;
+
 public class Purchase {
 	private GoodsCategory goodsCategory;
 	private int number;

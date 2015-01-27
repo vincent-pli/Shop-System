@@ -1,6 +1,9 @@
-package com.pengli.shopSystem.beans;
+package com.pengli.shopSystem.beans.promotion.imp;
 
 import java.math.BigDecimal;
+
+import com.pengli.shopSystem.beans.Purchase;
+import com.pengli.shopSystem.beans.promotion.PromotionInterface;
 
 public class BuyTwoFreeOne implements PromotionInterface {
 	private String promotionInfo;
